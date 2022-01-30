@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Moq;
+using Pokedex.Domain.Models;
 using Pokedex.Domain.Services;
 using Pokedex.Translate;
 using Xunit;
@@ -19,7 +20,7 @@ namespace Pokedex.Tests.Services
 		[Fact]
 		public async Task TranslateTextAsync_Valid()
 		{
-			var result = await _translateService.TranslateTextAsync(It.IsAny<string>());
+			var result = await _translateService.TranslateTextAsync(It.IsAny<TranslateType>(), It.IsAny<string>());
 
 			Assert.NotNull(result);
 		}
@@ -27,7 +28,7 @@ namespace Pokedex.Tests.Services
 		[Fact]
 		public async Task TranslateTextAsync_Invalid()
 		{
-			await Assert.ThrowsAsync<TranslateApiException>(() => _translateService.TranslateTextAsync(It.IsAny<string>()));
+			await Assert.ThrowsAsync<TranslateApiException>(() => _translateService.TranslateTextAsync(It.IsAny<TranslateType>(), It.IsAny<string>()));
 		}
 	}
 }

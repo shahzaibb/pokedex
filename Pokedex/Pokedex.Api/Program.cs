@@ -2,6 +2,7 @@
 using Pokedex.Domain.Data;
 using Pokedex.Domain.Services;
 using Pokedex.Services;
+using Pokedex.Translate;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPokemonService, PokemonService>();
 builder.Services.AddHttpClient<IPokemonData, PokemonData>((client) => { client.BaseAddress = new Uri(config["PokeApi"]); });
+builder.Services.AddHttpClient<ITranslateService, TranslateService>((client) => { client.BaseAddress = new Uri(config["TranslationApi"]); });
 
 var app = builder.Build();
 

@@ -26,5 +26,8 @@
     <ProjectReference Include="..\Pokedex.Services\Pokedex.Services.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\Pokedex.Translate\Pokedex.Translate.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
