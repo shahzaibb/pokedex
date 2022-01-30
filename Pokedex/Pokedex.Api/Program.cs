@@ -4,7 +4,7 @@ using Pokedex.Domain.Services;
 using Pokedex.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var config = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPokemonService, PokemonService>();
-builder.Services.AddHttpClient<IPokemonData, PokemonData>((client) => { client.BaseAddress = new Uri("https://pokeapi.co/api/v2/"); });
+builder.Services.AddHttpClient<IPokemonData, PokemonData>((client) => { client.BaseAddress = new Uri(config["PokeApi"]); });
 
 var app = builder.Build();
 
