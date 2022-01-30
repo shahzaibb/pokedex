@@ -41,7 +41,7 @@ namespace Pokedex.Tests.Data
 
 			Assert.NotNull(result);
 			Assert.IsType<PokemonModel>(result);
-			Assert.Equal(name, result.Name);
+			Assert.Equal(name, result.Name);			
 		}
 
 		[Fact]
