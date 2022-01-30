@@ -6,6 +6,8 @@ namespace Pokedex.Translate
 		public TranslateApiException()
 		{
 		}
+
+		public TranslateApiException(string message) : base(message) { }
 	}
 }
 

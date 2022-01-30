@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Net;
+using Newtonsoft.Json;
 using Pokedex.Domain.Models;
 using Pokedex.Domain.Services;
+using Pokedex.Translate.Models;
 
 namespace Pokedex.Translate
 {
@@ -13,9 +16,19 @@ namespace Pokedex.Translate
             _httpClient = httpClient;
 		}
 
-        public Task<string> TranslateTextAsync(TranslateType type, string text)
+        public async Task<string> TranslateTextAsync(TranslateType type, string text)
         {
-            throw new NotImplementedException();
+            var url = type == TranslateType.Shakespeare ? "shakespeare" : "yoda";
+            var query = new StringContent($"text={text}");
+
+            var result = await _httpClient.PostAsync(url, query);
+
+            if (result.StatusCode != HttpStatusCode.OK)
+                throw new TranslateApiException($"{result.StatusCode} : Translateion api erroe");
+
+            var translation = JsonConvert.DeserializeObject<Translation>(await result.Content.ReadAsStringAsync());
+
+            return translation?.contents?.translated;
         }
     }
 }
