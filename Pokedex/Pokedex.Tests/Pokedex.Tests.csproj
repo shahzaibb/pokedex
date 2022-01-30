@@ -26,16 +26,30 @@
     <None Remove="Services\" />
     <None Remove="Data\" />
     <None Remove="Moq" />
+    <None Remove="Mocks\" />
+    <None Remove="SampleData\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Services\" />
     <Folder Include="Data\" />
+    <Folder Include="Mocks\" />
+    <Folder Include="SampleData\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pokedex.Api\Pokedex.Api.csproj" />
     <ProjectReference Include="..\Pokedex.Domain\Pokedex.Domain.csproj" />
     <ProjectReference Include="..\Pokedex.Services\Pokedex.Services.csproj" />
     <ProjectReference Include="..\Pokedex.Data\Pokedex.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Data\PokemonDataTests.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SampleData\pokemon-species.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

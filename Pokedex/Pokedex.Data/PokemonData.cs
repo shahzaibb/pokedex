@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using Newtonsoft.Json;
 using Pokedex.Domain;
 using Pokedex.Domain.Data;
 
@@ -6,13 +8,31 @@ namespace Pokedex.Data
 {
 	public class PokemonData : IPokemonData
 	{
-		public PokemonData()
+        private readonly HttpClient _httpClient;
+		public PokemonData(HttpClient httpClient)
 		{
+            _httpClient = httpClient;
 		}
 
-        public Task<PokemonModel> GetPokemonAsync(string name)
+        public async Task<PokemonModel> GetPokemonAsync(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _httpClient.GetStringAsync($"pokemon/{name}");
+                var species = JsonConvert.DeserializeObject<PokemonSpeciesEntity>(response);
+
+                if (species == null)
+                    throw new NullReferenceException($"Empty data returned for: {name}");
+
+                return species.ToModel();
+            }
+            catch(HttpRequestException e)
+            {
+                if (e.StatusCode == HttpStatusCode.NotFound)
+                    return null;
+
+                throw e;
+            }            
         }
     }
 }

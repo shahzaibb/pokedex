@@ -9,4 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Pokedex.Domain\Pokedex.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
 </Project>
