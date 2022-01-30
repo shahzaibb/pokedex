@@ -41,6 +41,7 @@
     <ProjectReference Include="..\Pokedex.Domain\Pokedex.Domain.csproj" />
     <ProjectReference Include="..\Pokedex.Services\Pokedex.Services.csproj" />
     <ProjectReference Include="..\Pokedex.Data\Pokedex.Data.csproj" />
+    <ProjectReference Include="..\Pokedex.Translate\Pokedex.Translate.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Data\PokemonDataTests.cs">
