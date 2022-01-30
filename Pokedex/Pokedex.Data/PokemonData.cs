@@ -9,7 +9,9 @@ namespace Pokedex.Data
 	public class PokemonData : IPokemonData
 	{
         private readonly HttpClient _httpClient;
-		public PokemonData(HttpClient httpClient)
+        private const string speciesEndpointPath = "pokemon-species";
+
+        public PokemonData(HttpClient httpClient)
 		{
             _httpClient = httpClient;
 		}
@@ -18,7 +20,7 @@ namespace Pokedex.Data
         {
             try
             {
-                var response = await _httpClient.GetStringAsync($"pokemon/{name}");
+                var response = await _httpClient.GetStringAsync($"{speciesEndpointPath}/{name}");
                 var species = JsonConvert.DeserializeObject<PokemonSpeciesEntity>(response);
 
                 if (species == null)
