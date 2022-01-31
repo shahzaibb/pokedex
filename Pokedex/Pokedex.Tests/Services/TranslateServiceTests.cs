@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Pokedex.Domain.Models;
-using Pokedex.Domain.Services;
 using Pokedex.Translate;
 using Pokedex.Translate.Models;
 using Xunit;
 
 namespace Pokedex.Tests.Services
 {
-	public class TranslateServiceTests
+    public class TranslateServiceTests
 	{
 		private readonly HttpClient _httpClient;
 		private readonly MockHttpMessageHandler _mockHttpMessageHandler;
@@ -54,7 +53,7 @@ namespace Pokedex.Tests.Services
 			_mockHttpMessageHandler.CreatMockMessageHandler(response);
 
 			await Assert.ThrowsAsync<TranslateApiException>(() => _translateService.TranslateTextAsync(It.IsAny<TranslateType>(), It.IsAny<string>()));
-		}
+		}		
 	}
 }
 
