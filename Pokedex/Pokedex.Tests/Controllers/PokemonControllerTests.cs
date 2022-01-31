@@ -32,7 +32,9 @@ namespace Pokedex.Tests.Controllers
 			Assert.IsType<OkObjectResult>(result.Result);
 			var objectResult = result.Result as OkObjectResult;
 			Assert.IsAssignableFrom<Pokemon>(objectResult.Value);
-        }
+			_pokemonService.Verify(x => x.GetPokemonAsync(It.IsAny<string>()), Times.Once);
+			_pokemonService.VerifyNoOtherCalls();
+		}
 
 		[Fact]
 		public async Task GetPokemon_NotFound()
@@ -43,6 +45,37 @@ namespace Pokedex.Tests.Controllers
 			var result = await _controller.GetPokemon(It.IsAny<string>());
 
 			Assert.IsType<NotFoundObjectResult>(result.Result);
+			_pokemonService.Verify(x => x.GetPokemonAsync(It.IsAny<string>()), Times.Once);
+			_pokemonService.VerifyNoOtherCalls();
+		}
+
+
+		[Fact]
+		public async Task GetTranslatedPokemon_Ok()
+		{
+			_pokemonService.Setup(x => x.GetPokemonTranslatedAsync(It.IsAny<string>()))
+				.ReturnsAsync(new PokemonModel());
+
+			var result = await _controller.GetPokemonTranslated(It.IsAny<string>());
+
+			Assert.IsType<OkObjectResult>(result.Result);
+			var objectResult = result.Result as OkObjectResult;
+			Assert.IsAssignableFrom<Pokemon>(objectResult.Value);
+			_pokemonService.Verify(x => x.GetPokemonTranslatedAsync(It.IsAny<string>()), Times.Once);
+			_pokemonService.VerifyNoOtherCalls();
+		}
+
+		[Fact]
+		public async Task GetTranslatedPokemon_NotFound()
+		{
+			_pokemonService.Setup(x => x.GetPokemonTranslatedAsync(It.IsAny<string>()))
+				.ReturnsAsync((PokemonModel)null);
+
+			var result = await _controller.GetPokemonTranslated(It.IsAny<string>());
+
+			Assert.IsType<NotFoundObjectResult>(result.Result);
+			_pokemonService.Verify(x => x.GetPokemonTranslatedAsync(It.IsAny<string>()), Times.Once);
+			_pokemonService.VerifyNoOtherCalls();
 		}
 	}
 }

@@ -24,5 +24,11 @@ public class PokemonController : ControllerBase
 
         return Ok(Pokemon.FromModel(result));
     }
+
+    [HttpGet("translated/{name}", Name = nameof(GetPokemonTranslated))]
+    public async Task<ActionResult<Pokemon>> GetPokemonTranslated(string name)
+    {
+        throw new NotImplementedException();
+    }
 }
 
