@@ -9,6 +9,10 @@ Pokemon information service
 4. dotnet run to run application.
 5. Swagger UI available (https://localhost:7146/swagger/index.html).
 
+# run with docker
+1. Install docker desktop if running locally
+2. docker compose up
+Note: I have limited experiance with docker and this solution is simply using the default docker files output by the VS Code docker extension.
 
 # production consideration
 
