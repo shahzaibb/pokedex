@@ -20,9 +20,12 @@ namespace Pokedex.Translate
         public async Task<string> TranslateTextAsync(TranslateType type, string text)
         {
             var url = type == TranslateType.Shakespeare ? "shakespeare" : "yoda";
-            var query = new StringContent($"text={text}");
+            var content = new FormUrlEncodedContent(new[]
+            {
+                 new KeyValuePair<string, string>("text", text)
+            });
 
-            var result = await _httpClient.PostAsync(url, query);
+            var result = await _httpClient.PostAsync(url, content);
 
             if (result.StatusCode != HttpStatusCode.OK)
                 throw new TranslateApiException($"{result.StatusCode} : Translateion api error");
