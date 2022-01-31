@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
+using Pokedex.Domain;
 using Pokedex.Domain.Models;
 using Pokedex.Translate;
 using Pokedex.Translate.Models;

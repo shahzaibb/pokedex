@@ -69,12 +69,13 @@ namespace Pokedex.Tests.Services
 		[InlineData(null, false, TranslateType.Shakespeare)]
 		public async Task GetPokemonTranslatedAsync(string habitat, bool isLegendary, TranslateType type)
 		{
+			var name = "pokemon";
 			_pokemonData.Setup(x => x.GetPokemonAsync(It.IsAny<string>()))
 				.ReturnsAsync(new PokemonModel { Habitat = habitat, IsLegendary = isLegendary });
 
 			_translateService.Setup(x => x.TranslateTextAsync(type, It.IsAny<string>()));
 
-			var result = await _service.GetPokemonTranslatedAsync(It.IsAny<string>());
+			var result = await _service.GetPokemonTranslatedAsync(name);
 
 			_translateService.Verify(x => x.TranslateTextAsync(type, It.IsAny<string>()), Times.Once);
 			_translateService.VerifyNoOtherCalls();

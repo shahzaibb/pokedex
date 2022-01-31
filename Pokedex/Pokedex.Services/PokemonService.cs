@@ -1,6 +1,7 @@
 ﻿using System;
 using Pokedex.Domain;
 using Pokedex.Domain.Data;
+using Pokedex.Domain.Models;
 using Pokedex.Domain.Services;
 
 namespace Pokedex.Services
@@ -24,9 +25,28 @@ namespace Pokedex.Services
             return _pokemonData.GetPokemonAsync(name);
         }
 
-        public Task<PokemonModel> GetPokemonTranslatedAsync(string name)
+        public async Task<PokemonModel> GetPokemonTranslatedAsync(string name)
         {
-            throw new NotImplementedException();
+            var pokemon = await GetPokemonAsync(name);
+
+            if (pokemon == null)
+                return null;
+
+            var translationType = pokemon.Habitat?.ToLowerInvariant() == "cave" || pokemon.IsLegendary
+                ? TranslateType.Yoda : TranslateType.Shakespeare;
+
+            try
+            {
+                var translatedText = await _translateService.TranslateTextAsync(translationType, pokemon?.Description);
+                if (!string.IsNullOrEmpty(translatedText))
+                    pokemon.Description = translatedText;
+            }
+            catch (TranslateApiException)
+            {
+                //3. If vou can't translate the Pokemons descriotion (for whatever reason t) then use the standard descriotior
+            }
+
+            return pokemon;
         }
     }
 }

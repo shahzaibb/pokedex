@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Pokedex.Translate
+namespace Pokedex.Domain
 {
 	public class TranslateApiException : Exception
 	{

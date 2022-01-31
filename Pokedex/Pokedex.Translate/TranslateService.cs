@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Pokedex.Domain.Models;
 using Pokedex.Domain.Services;
 using Pokedex.Translate.Models;
+using Pokedex.Domain;
 
 namespace Pokedex.Translate
 {
@@ -24,11 +25,14 @@ namespace Pokedex.Translate
             var result = await _httpClient.PostAsync(url, query);
 
             if (result.StatusCode != HttpStatusCode.OK)
-                throw new TranslateApiException($"{result.StatusCode} : Translateion api erroe");
+                throw new TranslateApiException($"{result.StatusCode} : Translateion api error");
 
             var translation = JsonConvert.DeserializeObject<Translation>(await result.Content.ReadAsStringAsync());
 
-            return translation?.contents?.translated;
+            if (string.IsNullOrEmpty(translation?.contents?.translated))
+                throw new TranslateApiException($"Translateion api returned blank for translation");
+
+            return translation.contents.translated;
         }
     }
 }
